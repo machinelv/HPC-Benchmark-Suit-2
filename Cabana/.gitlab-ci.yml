@@ -1,0 +1,18 @@
+test:default:
+  image: ubuntu
+  script:
+    - apt-get update
+    - apt-get install -y gcovr cmake g++ git bc
+    - git clone --depth=1 --branch 3.0.00 https://github.com/kokkos/kokkos.git && 
+      pushd kokkos &&
+      mkdir build &&
+      pushd build &&
+      cmake -DCMAKE_INSTALL_PREFIX=$HOME/kokkos -DKokkos_ENABLE_SERIAL=ON -DKokkos_ENABLE_OPENMP=ON .. &&
+      make -j2 &&
+      make install &&
+      popd &&
+      popd
+    - mkdir build && cd build &&
+      cmake -DCMAKE_PREFIX_PATH=$HOME/kokkos -DCabana_ENABLE_TESTING=ON -DCabana_ENABLE_EXAMPLES=ON .. &&
+      make -k -O -j2 VERBOSE=1 &&
+      make test

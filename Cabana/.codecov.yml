@@ -1,0 +1,11 @@
+coverage:
+  precision: 1
+  round: down
+  range: "70...100"
+ignore:
+  - cmake/test_harness/
+  - cajita/unit_test/
+  - core/unit_test/
+  - core/performance_test/peakflops
+  - example/
+  - benchmark/
